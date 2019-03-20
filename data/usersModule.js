@@ -15,8 +15,8 @@ async function addUser(user) {
     return findById("users", id);
 }
 
-function findById(table, id) {
+function findById(table, identifier) {
     return db(`${table}`)
-      .where({ id })
+      .where({ identifier })
       .first();
   }

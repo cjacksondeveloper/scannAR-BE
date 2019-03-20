@@ -6,17 +6,20 @@ module.exports = {
 };
 
 function getProducts(userId) {
-    return db("products")
-    .where({ userId })
-  }
-
-async function addProduct(product) {
-    const [id] = await db("products").insert(product);
-    return findById("products", id);
+  return db("products").where({ userId });
 }
 
-function findById(table, id) {
-    return db(`${table}`)
-      .where({ id })
-      .first();
-  }
+async function addProduct(product, userId) {
+  const [id] = await db("products").insert({
+    ...product,
+    userId: userId
+  });
+  return findById("products", id);
+  // return db("products").where({ userId });
+}
+
+function findById(table, identifier) {
+  return db(`${table}`)
+    .where({ identifier })
+    .first();
+}
