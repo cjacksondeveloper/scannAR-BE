@@ -5,9 +5,9 @@ const { authenticate } = require("../api/globalMW.js");
 const { jwtSecret } = require('../config/secrets.js')
 
 router.get("/", authenticate, (req, res) => {
-    const userid = req.decoded.subject
-    console.log(`${userid}`)
-  db.getProducts(userid)
+    const userId = req.decoded.subject
+    console.log(userId)
+  db.getProducts(userId)
     .then(products => {
       res.status(200).json(products);
     })
@@ -16,9 +16,10 @@ router.get("/", authenticate, (req, res) => {
       });
 });
 
-router.post("/", authenticate, (req, res) => {
-    const userid = req.decoded.subject
-  db.addProduct(userid)
+router.post("/add", authenticate, (req, res) => {
+  const userId = req.decoded.subject
+  console.log(userId)
+  db.addProduct(req.body, userId)
     .then(added => {
       res.status(201).json(added);
     })
@@ -28,13 +29,13 @@ router.post("/", authenticate, (req, res) => {
 });
 
 router.post("/listusers", authenticate, (req, res) => {
-    const userid = req.decoded.subject
+    const userId = req.decoded.subject
     const token = req.headers.authorization
     jwt.verify(token, jwtSecret, err => {
       if (err) {
-        res.send(`${userid}`);
+        res.send(`${userId}`);
       } else {
-        res.send(`${userid}`);
+        res.send(`${userId}`);
       }
     });
   });
