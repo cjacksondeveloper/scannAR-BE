@@ -7,12 +7,13 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .unique();
       column.string("password", 32).notNullable();
-      column.string("fullName", 128).defaultTo('')
-      column.string("email", 128).defaultTo('')
+      column.string("fullName", 128).defaultTo("");
+      column.string("email", 128).defaultTo("");
+      column.boolean("oAuth").defaultTo(false);
     })
     .createTable("user_addresses", column => {
       column.increments();
-      column.string("label", 12).notNullable()
+      column.string("label", 12).notNullable();
       column.string("address", 512).notNullable();
       column
         .integer("userId")
@@ -23,17 +24,17 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE");
     })
     .createTable("products", column => {
-      column.increments()
+      column.increments();
       column.string("name", 128).notNullable();
-      column.string("description", 512).defaultTo('')
-        column.integer('weight')
-        column.integer("length")
-        column.integer("width")
-        column.integer("height")
-        column.integer("value")
-        column.string("arAsset", 512).defaultTo('')
-        column.string("manufacturerId", 512).defaultTo('')
-        column.boolean("fragile").defaultTo(false)
+      column.string("description", 512).defaultTo("");
+      column.integer("weight");
+      column.integer("length");
+      column.integer("width");
+      column.integer("height");
+      column.integer("value");
+      column.string("arAsset", 512).defaultTo("");
+      column.string("manufacturerId", 512).defaultTo("");
+      column.boolean("fragile").defaultTo(false);
       column
         .integer("userId")
         .unsigned()
@@ -43,9 +44,9 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE");
     })
     .createTable("product_images", column => {
-        column.increments();
-        column.string("imageURL", 512).defaultTo('')
-        column
+      column.increments();
+      column.string("imageURL", 512).defaultTo("");
+      column
         .integer("productId")
         .unsigned()
         .references("id")
@@ -55,8 +56,8 @@ exports.up = function(knex, Promise) {
     })
     .createTable("shipments", column => {
       column.increments();
-      column.boolean("arrived").defaultTo(false)
-      column.date("dateShipped", 24)
+      column.boolean("arrived").defaultTo(false);
+      column.date("dateShipped", 24);
       column
         .integer("productId")
         .unsigned()
@@ -64,17 +65,17 @@ exports.up = function(knex, Promise) {
         .inTable("products")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
-    column.string("shippedFrom", 512).defaultTo('')
-    column.string("trackingNumber", 128).defaultTo('')
-    column.string("carrierName", 128).defaultTo('')
-    column.string("shippingType", 128).defaultTo('')
+      column.string("shippedFrom", 512).defaultTo("");
+      column.string("trackingNumber", 128).defaultTo("");
+      column.string("carrierName", 128).defaultTo("");
+      column.string("shippingType", 128).defaultTo("");
     })
     .createTable("shippingTo", column => {
-        column.increments();
+      column.increments();
       column.string("customerName", 128).notNullable();
-      column.string("customerEmail", 128).defaultTo('')
+      column.string("customerEmail", 128).defaultTo("");
       column.string("customerAddress", 512).notNullable();
-      column.string("deliveryInstructions", 512).defaultTo('')
+      column.string("deliveryInstructions", 512).defaultTo("");
       column
         .integer("shipmentId")
         .unsigned()
@@ -82,7 +83,7 @@ exports.up = function(knex, Promise) {
         .inTable("shipments")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
-    })
+    });
 };
 
 exports.down = function(knex, Promise) {

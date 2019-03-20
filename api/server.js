@@ -25,7 +25,7 @@ server.use(cors());
 server.use(helmet());
 
 server.use('/api/users', UserRouter);
-// server.use('/api/products', ProductsRouter);
+server.use('/api/products', ProductsRouter);
 // server.use('/api/shipments', ShipmentsRouter);
 
 module.exports = server;

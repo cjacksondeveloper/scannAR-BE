@@ -31,8 +31,7 @@ router.post("/login", (req, res) => {
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = usersMW.makejwt(user);
-        const userdata = { token: token, userId: user.id };
-        res.status(200).json(userdata);
+        res.status(200).json(token);
       } else {
         res
           .status(401)
@@ -41,8 +40,8 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.post("/checkauth", (req, res) => {
-  const token = req.body.token;
+router.get("/checkauth", (req, res) => {
+  const token = req.headers.token;
   jwt.verify(token, jwtSecret, err => {
     if (err) {
       res.send(false);
