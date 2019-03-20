@@ -9,7 +9,7 @@ module.exports = {
 
 function makejwt(user) {
   const payload = {
-    subject: user.id,
+    subject: user.identifier,
     username: user.username
   };
   const options = {

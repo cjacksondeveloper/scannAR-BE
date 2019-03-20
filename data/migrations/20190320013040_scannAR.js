@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema
     .createTable("users", column => {
-      column.increments();
+      column.increments("identifier");
       column
         .string("username", 32)
         .notNullable()
@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
       column.boolean("oAuth").defaultTo(false);
     })
     .createTable("user_addresses", column => {
-      column.increments();
+      column.increments("identifier");
       column.string("label", 12).notNullable();
       column.string("address", 512).notNullable();
       column
@@ -24,7 +24,7 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE");
     })
     .createTable("products", column => {
-      column.increments();
+      column.increments("identifier");
       column.string("name", 128).notNullable();
       column.string("description", 512).defaultTo("");
       column.integer("weight");
@@ -44,7 +44,7 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE");
     })
     .createTable("product_images", column => {
-      column.increments();
+      column.increments("identifier");
       column.string("imageURL", 512).defaultTo("");
       column
         .integer("productId")
@@ -55,7 +55,7 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE");
     })
     .createTable("shipments", column => {
-      column.increments();
+      column.increments("identifier");
       column.boolean("arrived").defaultTo(false);
       column.date("dateShipped", 24);
       column
@@ -71,7 +71,7 @@ exports.up = function(knex, Promise) {
       column.string("shippingType", 128).defaultTo("");
     })
     .createTable("shippingTo", column => {
-      column.increments();
+      column.increments("identifier");
       column.string("customerName", 128).notNullable();
       column.string("customerEmail", 128).defaultTo("");
       column.string("customerAddress", 512).notNullable();

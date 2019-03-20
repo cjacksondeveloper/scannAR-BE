@@ -41,7 +41,7 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/checkauth", (req, res) => {
-  const token = req.headers.token;
+  const token = req.headers.authorization;
   jwt.verify(token, jwtSecret, err => {
     if (err) {
       res.send(false);
