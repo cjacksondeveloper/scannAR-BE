@@ -4,36 +4,37 @@ const db = require("../data/productsModule.js");
 const { authenticate } = require("../api/globalMW.js");
 const { jwtSecret } = require('../config/secrets.js')
 
-router.get("/products", authenticate, (req, res) => {
-  let { userId } = req.headers;
-  db.getProducts(userId)
+router.get("/", authenticate, (req, res) => {
+    const userid = req.decoded.subject
+    console.log(`${userid}`)
+  db.getProducts(userid)
     .then(products => {
-      res.send(products);
+      res.status(200).json(products);
     })
     .catch(({ code, message }) => {
         res.status(code).json({ message });
       });
 });
 
-router.post("/products", authenticate, (req, res) => {
-let { userId } = req.headers;
-  db.addProduct(userId)
+router.post("/", authenticate, (req, res) => {
+    const userid = req.decoded.subject
+  db.addProduct(userid)
     .then(added => {
-    res.send(added);
+      res.status(201).json(added);
     })
     .catch(({ code, message }) => {
       res.status(code).json({ message });
     });
 });
 
-router.get("/listusers", authenticate, (req, res) => {
+router.post("/listusers", authenticate, (req, res) => {
     const userid = req.decoded.subject
-    const token = req.headers.token
+    const token = req.headers.authorization
     jwt.verify(token, jwtSecret, err => {
       if (err) {
         res.send(`${userid}`);
       } else {
-        res.send(true);
+        res.send(`${userid}`);
       }
     });
   });

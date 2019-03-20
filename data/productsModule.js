@@ -5,9 +5,9 @@ module.exports = {
   addProduct
 };
 
-function getProducts(products) {
+function getProducts(userId) {
     return db("products")
-    .where("products", products)
+    .where({ userId })
   }
 
 async function addProduct(product) {
