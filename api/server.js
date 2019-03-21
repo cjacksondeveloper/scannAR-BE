@@ -3,7 +3,6 @@ const moment = require("moment")
 const cors = require("cors");
 const express = require("express");
 const helmet = require("helmet");
-const morgan = require("morgan");
 
 const UserRouter = require("../users/usersRouter.js");
 const ProductsRouter = require("../products/productsRouter.js");
@@ -20,7 +19,8 @@ const server = express();
 //   allowedHeaders: ['Content-Type', 'Authorization', 'UserId'],
 // };
 
-server.use(morgan());
+const testconfigvar = PROCESS.ENV.TESTINGVAR
+
 server.use(express.json());
 server.use(cors());
 server.use(helmet());
@@ -29,8 +29,9 @@ server.get("/", (req, res) => {
   res.send(`
     <div>
       <h1>scannAR Back-End API</h1>
+      <p>${testconfigvar}<p>
       <p>
-        Welcome to the server! The time is now ${moment().local().format("h:mm:ss a")}.
+        Welcome to the server! The time is now ${moment().utcOffset(-7).format("h:mm:ss a")} PST / ${moment().utcOffset(-4).format("h:mm:ss a")} EST.
       </p>
       <h3>POST api/users/register – Creates a new record on the ‘users’ table.</h3>
       <p>
