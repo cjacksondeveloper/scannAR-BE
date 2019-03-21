@@ -19,7 +19,7 @@ const server = express();
 //   allowedHeaders: ['Content-Type', 'Authorization', 'UserId'],
 // };
 
-const testconfigvar = PROCESS.ENV.TESTINGVAR
+const testconfigvar = process.env.TESTINGVAR
 
 server.use(express.json());
 server.use(cors());
