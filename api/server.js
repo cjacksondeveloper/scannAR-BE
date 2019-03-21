@@ -30,7 +30,7 @@ server.get("/", (req, res) => {
     <div>
       <h1>scannAR Back-End API</h1>
       <p>
-        Welcome to the server! The time is now ${moment().format("h:mm:ss a")}.
+        Welcome to the server! The time is now ${moment().local().format("h:mm:ss a")}.
       </p>
       <h3>POST api/users/register – Creates a new record on the ‘users’ table.</h3>
       <p>
