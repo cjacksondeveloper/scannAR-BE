@@ -25,7 +25,7 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  console.log(req.body)
+  console.log(req)
   const { username, password } = req.body;
   db.findUsername(username)
     .first()
