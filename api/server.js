@@ -1,5 +1,6 @@
 require("dotenv").config();
 const moment = require("moment")
+const morgan = require("morgan")
 const cors = require("cors");
 const express = require("express");
 const helmet = require("helmet");
@@ -20,6 +21,7 @@ const server = express();
 
 const testconfigvar = process.env.TESTINGVAR
 
+server.use(morgan());
 server.use(express.json());
 server.use(cors());
 server.use(helmet());
