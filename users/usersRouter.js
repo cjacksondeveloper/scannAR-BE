@@ -25,14 +25,13 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  console.log(req)
   const { username, password } = req.body;
   db.findUsername(username)
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = usersMW.makejwt(user);
-        res.status(200).json(token);
+        res.status(200).json({token});
       } else {
         res
           .status(401)
